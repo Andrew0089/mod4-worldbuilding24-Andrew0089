@@ -9,7 +9,7 @@ public class PickupScript : MonoBehaviour
     public static int toolsCollected = 0;
 
     // Total tools in the game (set this in the inspector or manually)
-    public int totalTools = 3;
+    public int totalTools = 10;
 
     // Reference to the UI TextMeshPro Text
     public TextMeshProUGUI toolsCollectedText;

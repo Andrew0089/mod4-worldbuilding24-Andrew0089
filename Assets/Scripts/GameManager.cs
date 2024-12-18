@@ -36,23 +36,23 @@ public class GameManager : MonoBehaviour
         // Check if the time is up
         if (timeRemaining <= 0 && !gameOver)
         {
-            EndGame("Kabloom! You failed to collect all parts.");  // Display "Kabloom" message when time runs out
-        }
-
-        // Check if all parts are collected
-        if (partsCollected >= totalParts && !gameOver)
-        {
-            EndGame("You Survived! All tools collected in time.");
+            EndGame("Kabloom! You failed to collect all parts.");
         }
     }
 
     // Call this method when a part is collected
     public void CollectPart()
     {
-        if (!gameOver)
+        if (gameOver)
+            return; // Do nothing if the game is already over
+
+        partsCollected++;
+        Debug.Log($"Parts Collected: {partsCollected}/{totalParts}");
+
+        // Check if all parts are collected
+        if (partsCollected >= totalParts)
         {
-            partsCollected++;
-            Debug.Log("Parts Collected: " + partsCollected);
+            EndGame("You Survived! All tools collected in time.");
         }
     }
 
@@ -64,24 +64,7 @@ public class GameManager : MonoBehaviour
         // Show the Game Over UI and message
         gameOverUI.SetActive(true);
         gameOverMessageText.gameObject.SetActive(true);
-        gameOverMessageText.text = message;  // Set the "Kabloom" message or any other message
-    }
-
-    // Restarts the game (resetting the timer, parts, and other game-related elements)
-    public void RestartGame()
-    {
-        // Reset the timer and parts collected
-        timeRemaining = timeLimit;
-        partsCollected = 0;
-
-        // Hide the Game Over UI and message
-        gameOverUI.SetActive(false);
-        gameOverMessageText.gameObject.SetActive(false);
-
-        // Reset other game-related elements (e.g., player position, etc.)
-        // Example: player.transform.position = initialPosition;
-
-        // Resume the game logic
-        gameOver = false;
+        gameOverMessageText.text = message;
+        Debug.Log("Game Over: " + message);
     }
 }
